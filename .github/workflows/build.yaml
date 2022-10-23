@@ -1,4 +1,4 @@
-name: Prod deploy
+name: Build
 
 on:
   push:
@@ -9,15 +9,17 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-
     steps:
+      - name: login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/checkout@v3
-
-      - name: Build and push image
-        run: |
-          docker build . --tag api-test
-          docker tag api-test:latest ghcr.io/beingflo/api-test:latest
-          docker push ghcr.io/beingflo/api-test:latest
+      - name: Build image
+        run: docker build . --tag api-test
+      - name: Tag image
+        run: docker tag api-test:latest ghcr.io/${{ github.actor }}/api-test:latest
+      - name: push image to GitHub Container Registry
+        run: docker push ghcr.io/${{ github.actor }}/api-test:latest
