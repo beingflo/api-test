@@ -1,7 +1,7 @@
 version: '3.3'
 services:
-  fieldnotes-api:
-    image: api-test
+  api-test:
+    image: "ghcr.io/beingflo/api-test:latest"
     container_name: api-test
     ports:
       - 3004:3004
