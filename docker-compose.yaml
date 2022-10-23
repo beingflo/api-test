@@ -1,0 +1,8 @@
+version: '3.3'
+services:
+  fieldnotes-api:
+    image: api-test
+    container_name: api-test
+    ports:
+      - 3004:3004
+    restart: unless-stopped
