@@ -19,4 +19,5 @@ jobs:
       - name: Build and push image
         run: |
           docker build . --tag api-test
+          docker tag api-test:latest ghcr.io/beingflo/api-test:latest
           docker push ghcr.io/beingflo/api-test:latest
